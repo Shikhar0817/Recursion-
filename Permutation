@@ -1,0 +1,42 @@
+## CPP CODE 
+
+class Solution {
+public:
+void getpermutation(vector<int>& nums,int ind, vector<vector<int>> &ans){
+            int n = nums.size();
+            if(ind == n){
+                ans.push_back({nums});
+                return ;
+            }
+            for(int i = ind; i < n; i++){
+                swap(nums[ind],nums[i]);
+                getpermutation(nums,ind+1,ans);
+                swap(nums[ind],nums[i]);
+            }
+        }
+    vector<vector<int>> permute(vector<int>& nums) {
+        vector<vector<int>> ans;
+        getpermutation(nums,0,ans);
+        return ans;
+        
+    }
+};
+
+## PYTHON CODE
+
+class Solution:
+    def permute(self, nums: List[int]) -> List[List[int]]:
+        ans = []
+        def fun(nums,ind,ans):
+            n = len(nums)
+            if ind == n:
+                ans.append(nums[:])
+                return 
+            for i in range(ind,n):
+                nums[ind],nums[i]=nums[i],nums[ind]
+                fun(nums,ind+1,ans)
+                nums[ind],nums[i]=nums[i],nums[ind]
+
+        fun(nums,0,ans)
+        return ans 
+
