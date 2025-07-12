@@ -1,0 +1,29 @@
+class Solution {
+public:
+    void ps(vector<int>&nums, vector<int>&lst, int i, vector<vector<int>> &res){
+        if (i==nums.size()){
+            res.push_back(lst);
+            return;
+        }
+
+        lst.push_back(nums[i]);
+        ps(nums,lst,i+1,res);
+
+        lst.pop_back();
+        int ind=i+1;
+        while (ind < nums.size() && nums[ind]==nums[ind-1]){
+            ind++;
+        }
+        ps(nums,lst,ind,res);
+}
+    vector<vector<int>> subsetsWithDup(vector<int>& nums) {
+        sort(nums.begin(), nums.end()); 
+        vector<vector<int>>res;
+        vector<int>lst;
+
+        ps(nums,lst,0,res);
+        return res;
+
+        
+    }
+};
