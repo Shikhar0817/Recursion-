@@ -1,0 +1,30 @@
+## CPP Solution ##
+
+class Solution {
+public:
+    void ps(vector<int>&nums, vector<int>&lst, int i, vector<vector<int>> &res){
+            if (i == nums.size()){
+                res.push_back({lst});
+                return;
+            }
+            lst.push_back(nums[i]);
+            ps(nums,lst,i+1,res);
+
+            lst.pop_back();
+            ps(nums,lst,i+1,res);
+
+        }
+    vector<vector<int>> subsets(vector<int>& nums) {
+        vector<vector<int>>res;
+        vector<int>lst;
+
+
+        ps(nums,lst,0,res);
+        return res;
+
+        
+    }
+    
+    
+
+};
