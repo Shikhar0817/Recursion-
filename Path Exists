@@ -1,0 +1,51 @@
+class Solution:
+    def validPath(self, n: int, edges: List[List[int]], source: int, destination: int) -> bool:
+        adj = [[] for _ in range(n)] 
+        
+        for u,v in edges:
+
+            adj[u].append(v)
+            adj[v].append(u)
+
+USING DFS
+
+        visited = [False] * n
+        def dfs(s):
+
+            if s == destination: 
+                return True
+
+            visited[s] = True
+            for y in adj[s]:
+                if visited[y]==False:
+                    if dfs(y):
+                        return True
+
+            return False 
+        return dfs(source)
+
+
+
+
+
+USING BFS
+
+        visited = [False] * n
+
+        def bfs(s):
+            q = []
+            q.append(s)
+            visited[s] = True
+
+            while q:
+                s = q.pop(0)
+                if s == destination:
+                    return True
+                for y in adj[s]:
+                    if visited[y]==False:
+                        visited[y] = True
+                        q.append(y)
+
+            return False
+
+        return bfs(source)
