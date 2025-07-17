@@ -1,0 +1,54 @@
+## PYTHON 
+class Solution:
+    def solveSudoku(self, board: List[List[str]]) -> None:
+        """
+        Do not return anything, modify board in-place instead.
+        """
+
+        rows = [set() for _ in range(9)]
+        cols = [set() for _ in range(9)]
+        boxes = [set() for _ in range(9)]  
+
+        for i in range(9):
+            for j in range(9):
+                val = board[i][j]
+                if val != '.':
+                    rows[i].add(val)
+                    cols[j].add(val)
+                    boxes[(i // 3) * 3 + (j // 3)].add(val)
+
+        def isSafe(row, col, dig):
+            box_index = (row // 3) * 3 + (col // 3)
+            if dig in rows[row] or dig in cols[col] or dig in boxes[box_index]:
+                return False
+            return True
+
+        def helper(row, col):
+            if row == 9:
+                return True
+
+            nextRow = row + (col + 1) // 9
+            nextCol = (col + 1) % 9
+
+            if board[row][col] != '.':
+                return helper(nextRow, nextCol)
+
+            for dig in map(str, range(1, 10)):
+                if isSafe(row, col, dig):
+                    board[row][col] = dig
+                    rows[row].add(dig)
+                    cols[col].add(dig)
+                    boxes[(row // 3) * 3 + (col // 3)].add(dig)
+
+                    if helper(nextRow, nextCol):
+                        return True
+
+                    # backtrack
+                    board[row][col] = '.'
+                    rows[row].remove(dig)
+                    cols[col].remove(dig)
+                    boxes[(row // 3) * 3 + (col // 3)].remove(dig)
+
+            return False
+
+        helper(0, 0)
